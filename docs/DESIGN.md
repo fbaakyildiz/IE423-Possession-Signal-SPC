@@ -6,7 +6,7 @@ Developer-level design notes for the IE 423 football possession control-chart pr
 
 **Project name:** Possession Signal SPC
 
-**Recommended GitHub repository name:** `IE423-Possession-Signal-SPC`
+**GitHub repository name:** `IE423-Possession-Signal-SPC`
 
 The project applies statistical process control methods to football match data. It uses ball-possession rates and match event data to detect interesting fixtures, visualize possession behavior, and interpret possible momentum shifts around goals, cards, and penalties.
 
@@ -187,18 +187,22 @@ Recommended next steps:
 - Compare possession signals against additional metrics such as attacks, shots, and successful passes.
 - Build a small dashboard for browsing fixtures, events, and charts.
 
-## 14. Rename Plan
+## 14. Repository Rename
 
-Repository renaming requires GitHub admin rights.
-
-Recommended new repository name:
+The repository has been renamed from:
 
 ```text
-IE423-Possession-Signal-SPC
+fbaakyildiz/IE423project
 ```
 
-After renaming, the local remote should be updated to:
+to:
 
-```bash
+```text
+fbaakyildiz/IE423-Possession-Signal-SPC
+```
+
+Local remotes should point to:
+
+```text
 git remote set-url origin https://github.com/fbaakyildiz/IE423-Possession-Signal-SPC.git
 ```

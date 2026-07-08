@@ -13,7 +13,7 @@ This IE 423 Quality Engineering project applies control-chart methodology to soc
 | Event shift notebook | [Open notebook](notebooks/event_shift_analysis.ipynb) |
 | Developer design document | [Read design document](docs/DESIGN.md) |
 | Control chart assets | [Browse charts](assets/control-charts/) |
-| GitHub repository | [fbaakyildiz/IE423project](https://github.com/fbaakyildiz/IE423project) |
+| GitHub repository | [fbaakyildiz/IE423-Possession-Signal-SPC](https://github.com/fbaakyildiz/IE423-Possession-Signal-SPC) |
 
 ## What The Project Does
 

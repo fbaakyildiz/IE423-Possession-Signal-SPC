@@ -8,7 +8,7 @@ Possession Signal SPC applies control-chart thinking to soccer match data. The p
 
 ## Project Links
 
-- [Project homepage](https://fbaakyildiz.github.io/IE423project/)
+- [Project homepage](https://fbaakyildiz.github.io/IE423-Possession-Signal-SPC/)
 - [Final report](reports/final-report.md)
 - [Control chart notebook](notebooks/control_charts.ipynb)
 - [Event shift notebook](notebooks/event_shift_analysis.ipynb)
