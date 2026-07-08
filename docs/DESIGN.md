@@ -1,0 +1,204 @@
+# Possession Signal SPC Design Document
+
+Developer-level design notes for the IE 423 football possession control-chart project.
+
+## 1. Project Identity
+
+**Project name:** Possession Signal SPC
+
+**Recommended GitHub repository name:** `IE423-Possession-Signal-SPC`
+
+The project applies statistical process control methods to football match data. It uses ball-possession rates and match event data to detect interesting fixtures, visualize possession behavior, and interpret possible momentum shifts around goals, cards, and penalties.
+
+## 2. Scope
+
+The project explores this hypothesis:
+
+> Ball-possession observations can provide insight into a match outcome. An increasing possession trend may indicate a higher chance of winning or recovering momentum, while a decreasing possession trend may indicate a higher chance of losing control of the match.
+
+The analysis is academic and descriptive. It is not a production prediction system.
+
+## 3. Repository Layout
+
+```text
+.
+├── README.md                       # GitHub landing page
+├── index.md                        # GitHub Pages homepage
+├── _config.yml                     # GitHub Pages configuration
+├── requirements.txt                # Python analysis dependencies
+├── assets/
+│   └── control-charts/             # Generated chart screenshots and project image
+├── data/
+│   └── ie423_match_data.csv        # Match statistics and event dataset
+├── docs/
+│   └── DESIGN.md                   # Developer design document
+├── notebooks/
+│   ├── control_charts.ipynb        # Fixture scoring and chart generation
+│   └── event_shift_analysis.ipynb  # Event-to-shift timing analysis
+└── reports/
+    └── final-report.md             # Final project report
+```
+
+## 4. Data Model
+
+The dataset contains minute-level football match observations. Important fields include:
+
+- `fixture_id`
+- `minute`
+- `Ball.Possession_home`
+- `Ball.Possession_away`
+- `Successful.Passes_home`
+- `Successful.Passes_away`
+- `Redcards_home`
+- `Redcards_away`
+- `Yellowcards_home`
+- `Yellowcards_away`
+- `Goals_home`
+- `Goals_away`
+- penalty-related event columns when available
+
+The notebooks read the dataset from:
+
+```text
+data/ie423_match_data.csv
+```
+
+## 5. Analysis Pipeline
+
+```text
+Match dataset
+    ↓
+Fixture-level grouping
+    ↓
+Metric selection: ball possession and successful passes
+    ↓
+Control limit calculation
+    ↓
+Out-of-control signal counting
+    ↓
+Event counting and interest scoring
+    ↓
+Interesting fixture selection
+    ↓
+40-minute and 80-minute control chart generation
+    ↓
+Event-to-shift interpretation
+    ↓
+Final report synthesis
+```
+
+## 6. Control Chart Design
+
+The project uses Shewhart-style control limits:
+
+```text
+center line = mean(series)
+upper control limit = mean(series) + z * std(series)
+lower control limit = mean(series) - z * std(series)
+```
+
+The notebooks use `z = 3` for standard control-limit construction and also test smaller sigma thresholds to identify visually meaningful shifts.
+
+## 7. Fixture Selection
+
+Fixtures are ranked using an interest score combining:
+
+- number of out-of-control possession observations
+- match events such as goals and red cards
+- possession behavior that produces interpretable chart movement
+
+The final report focuses on eight selected fixtures with rich event dynamics and visible possession patterns.
+
+## 8. Event Shift Analysis
+
+The event notebook studies whether events are followed by delayed possession shifts. It compares event minutes against later signal changes in possession. The report notes that some goal effects appear with a delay of roughly 5 to 10 minutes.
+
+Events considered include:
+
+- goals
+- red cards
+- yellow cards
+- penalties
+
+## 9. Generated Artifacts
+
+Generated chart screenshots are stored under:
+
+```text
+assets/control-charts/
+```
+
+The final written analysis is stored at:
+
+```text
+reports/final-report.md
+```
+
+## 10. Reproducibility
+
+Set up the environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Run the notebooks:
+
+```bash
+jupyter notebook notebooks/control_charts.ipynb
+jupyter notebook notebooks/event_shift_analysis.ipynb
+```
+
+Known reproducibility considerations:
+
+- chart screenshots are committed as static artifacts
+- notebook output may differ if plotting libraries or notebook renderers change
+- manual report interpretation is part of the final project deliverable
+
+## 11. Security and Ethics
+
+This repository does not require secrets or API keys.
+
+Ethical constraints:
+
+- Do not present the analysis as betting advice.
+- Do not overstate causality from possession charts alone.
+- Treat control-chart signals as exploratory indicators, not definitive predictions.
+- Validate on broader match samples before making general claims.
+
+## 12. Current Limitations
+
+- The project uses notebook-based analysis rather than reusable Python modules.
+- Fixture selection includes heuristic interest scoring.
+- Some interpretations are qualitative and manually written.
+- Static chart screenshots are committed rather than regenerated by a script.
+- Ball possession may be affected by match state and tactics, so it should not be interpreted as a standalone causal metric.
+
+## 13. Future Engineering Improvements
+
+Recommended next steps:
+
+- Extract control-limit and fixture-scoring logic into Python modules.
+- Add a script to regenerate all control chart images.
+- Add automated tests for control-limit calculations.
+- Add a machine-readable fixture summary file.
+- Compare possession signals against additional metrics such as attacks, shots, and successful passes.
+- Build a small dashboard for browsing fixtures, events, and charts.
+
+## 14. Rename Plan
+
+Repository renaming requires GitHub admin rights.
+
+Recommended new repository name:
+
+```text
+IE423-Possession-Signal-SPC
+```
+
+After renaming, the local remote should be updated to:
+
+```bash
+git remote set-url origin https://github.com/fbaakyildiz/IE423-Possession-Signal-SPC.git
+```
