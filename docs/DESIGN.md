@@ -1,6 +1,6 @@
 # Possession Signal SPC Design Document
 
-Developer-level design notes for the IE 423 football possession control-chart project.
+Design notes for the IE 423 football possession control-chart project.
 
 ## 1. Project Identity
 
@@ -31,7 +31,7 @@ The analysis is academic and descriptive. It is not a production prediction syst
 ├── data/
 │   └── ie423_match_data.csv        # Match statistics and event dataset
 ├── docs/
-│   └── DESIGN.md                   # Developer design document
+│   └── DESIGN.md                   # Design document
 ├── notebooks/
 │   ├── control_charts.ipynb        # Fixture scoring and chart generation
 │   └── event_shift_analysis.ipynb  # Event-to-shift timing analysis

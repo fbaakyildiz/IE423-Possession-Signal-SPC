@@ -12,7 +12,7 @@ Possession Signal SPC applies control-chart thinking to soccer match data. The p
 - [Final report](reports/final-report.md)
 - [Control chart notebook](notebooks/control_charts.ipynb)
 - [Event shift notebook](notebooks/event_shift_analysis.ipynb)
-- [Developer design document](docs/DESIGN.md)
+- [Design document](docs/DESIGN.md)
 
 ## Project Summary
 
