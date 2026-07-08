@@ -12,6 +12,8 @@ Possession Signal SPC applies control-chart thinking to soccer match data. The p
 - [Final report](reports/final-report.md)
 - [Control chart notebook](notebooks/control_charts.ipynb)
 - [Event shift notebook](notebooks/event_shift_analysis.ipynb)
+- [Rendered control-chart analysis](reports/control-charts-analysis.html)
+- [Rendered event-shift analysis](reports/event-shift-analysis.html)
 - [Design document](docs/DESIGN.md)
 
 ## Project Summary
@@ -45,7 +47,9 @@ Core workflow:
 │   ├── control_charts.ipynb
 │   └── event_shift_analysis.ipynb
 └── reports/
-    └── final-report.md
+    ├── final-report.md
+    ├── control-charts-analysis.html
+    └── event-shift-analysis.html
 ```
 
 ## Reproducing The Analysis
@@ -55,6 +59,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 jupyter notebook notebooks/control_charts.ipynb
+jupyter notebook notebooks/event_shift_analysis.ipynb
 ```
 
 The notebooks expect the dataset at:
