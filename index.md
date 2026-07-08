@@ -1,5 +1,7 @@
 # Possession Signal SPC
 
+[Back to Portfolio](https://fbaakyildiz.github.io/)
+
 Statistical process control analysis of live football ball-possession dynamics.
 
 This IE 423 Quality Engineering project applies control-chart methodology to soccer match data. The analysis investigates whether ball-possession trends and event-driven shifts can provide insight into match outcomes and in-game momentum.
