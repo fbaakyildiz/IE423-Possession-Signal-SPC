@@ -3,483 +3,131 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Possession Signal SPC: statistical process control analysis of live football possession dynamics."
-    />
-    <title>Possession Signal SPC | Project Page</title>
+    <meta name="description" content="Possession Signal SPC applies control-chart analysis to football possession dynamics." />
+    <title>Possession Signal SPC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --ink: #102033;
-        --muted: #667085;
-        --line: rgba(16, 32, 51, 0.12);
-        --panel: rgba(255, 255, 255, 0.74);
-        --panel-strong: rgba(255, 255, 255, 0.9);
-        --green: #0f766e;
-        --lime: #65a30d;
-        --amber: #d97706;
-        --red: #dc2626;
-        --blue: #2563eb;
-        --shadow: 0 24px 70px rgba(16, 32, 51, 0.16);
+        color-scheme: light;
+        --ink: #10121a; --muted: #687083; --line: #d9e0ec; --paper: #f6f8fb; --surface: #ffffff;
+        --primary: #234e52; --accent: #b7791f; --dark: #111827; --shadow: 0 24px 60px rgba(15,23,42,0.12);
       }
-
-      * {
-        box-sizing: border-box;
-      }
-
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        min-height: 100vh;
+        background:
+          radial-gradient(circle at 12% 0%, rgba(183, 121, 31, 0.16), transparent 30rem),
+          radial-gradient(circle at 88% 8%, rgba(35, 78, 82, 0.14), transparent 26rem),
+          linear-gradient(180deg, #eef7f4 0%, var(--paper) 38%, #ffffff 100%);
         color: var(--ink);
         font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background:
-          radial-gradient(circle at 18% 12%, rgba(15, 118, 110, 0.2), transparent 34%),
-          radial-gradient(circle at 78% 10%, rgba(101, 163, 13, 0.17), transparent 30%),
-          linear-gradient(135deg, #f8fafc 0%, #dcfce7 48%, #eff6ff 100%);
       }
-
-      body::before {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        content: "";
-        background-image:
-          linear-gradient(rgba(16, 32, 51, 0.045) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(16, 32, 51, 0.045) 1px, transparent 1px);
-        background-size: 44px 44px;
-        mask-image: linear-gradient(to bottom, #000, transparent 78%);
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .shell {
-        width: min(1160px, calc(100% - 36px));
-        margin: 0 auto;
-      }
-
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 22px 0;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 800;
-      }
-
-      .mark {
-        display: grid;
-        width: 42px;
-        height: 42px;
-        place-items: center;
-        border: 1px solid rgba(15, 118, 110, 0.26);
-        border-radius: 14px;
-        color: #fff;
-        background: linear-gradient(135deg, var(--green), var(--lime));
-        box-shadow: 0 16px 32px rgba(15, 118, 110, 0.24);
-        font-family: "IBM Plex Mono", monospace;
-      }
-
-      .nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 8px;
-      }
-
-      .nav a,
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 42px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 10px 15px;
-        background: rgba(255, 255, 255, 0.62);
-        color: #344054;
-        font-size: 14px;
-        font-weight: 700;
-        backdrop-filter: blur(16px);
-      }
-
-      .button.primary {
-        border-color: transparent;
-        color: #fff;
-        background: linear-gradient(135deg, var(--green), var(--lime));
-        box-shadow: 0 18px 44px rgba(15, 118, 110, 0.22);
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
-        gap: 28px;
-        align-items: stretch;
-        padding: 28px 0 42px;
-      }
-
-      .hero-copy,
-      .chart-card,
-      .card,
-      .material {
-        border: 1px solid rgba(255, 255, 255, 0.66);
-        border-radius: 28px;
-        background: var(--panel);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(20px);
-      }
-
-      .hero-copy {
-        padding: clamp(28px, 5vw, 56px);
-      }
-
-      .eyebrow {
-        margin: 0 0 14px;
-        color: var(--green);
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      h1 {
-        max-width: 780px;
-        margin: 0;
-        font-size: clamp(42px, 7vw, 78px);
-        line-height: 0.98;
-        letter-spacing: -0.055em;
-      }
-
-      .lead {
-        max-width: 720px;
-        margin: 22px 0 0;
-        color: #344054;
-        font-size: clamp(17px, 2.2vw, 22px);
-        line-height: 1.55;
-      }
-
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 30px;
-      }
-
-      .chart-card {
-        display: grid;
-        align-content: center;
-        min-height: 480px;
-        padding: 28px;
-      }
-
-      .chart {
-        position: relative;
-        min-height: 360px;
-        overflow: hidden;
-        border: 1px solid rgba(16, 32, 51, 0.12);
-        border-radius: 24px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 250, 252, 0.76)),
-          repeating-linear-gradient(0deg, transparent 0 58px, rgba(15, 118, 110, 0.09) 59px 60px),
-          repeating-linear-gradient(90deg, transparent 0 58px, rgba(15, 118, 110, 0.08) 59px 60px);
-      }
-
-      .limit {
-        position: absolute;
-        left: 28px;
-        right: 28px;
-        height: 2px;
-        border-radius: 999px;
-      }
-
-      .limit.ucl {
-        top: 28%;
-        background: rgba(220, 38, 38, 0.48);
-      }
-
-      .limit.cl {
-        top: 52%;
-        background: rgba(16, 32, 51, 0.28);
-      }
-
-      .limit.lcl {
-        top: 76%;
-        background: rgba(37, 99, 235, 0.45);
-      }
-
-      .line {
-        position: absolute;
-        inset: 52px 30px 58px;
-      }
-
-      .segment {
-        position: absolute;
-        height: 5px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, var(--green), var(--lime));
-        transform-origin: left center;
-        box-shadow: 0 12px 24px rgba(15, 118, 110, 0.24);
-      }
-
-      .s1 { left: 2%; top: 60%; width: 23%; transform: rotate(-13deg); }
-      .s2 { left: 24%; top: 51%; width: 25%; transform: rotate(18deg); }
-      .s3 { left: 47%; top: 60%; width: 22%; transform: rotate(-26deg); }
-      .s4 { left: 67%; top: 42%; width: 26%; transform: rotate(11deg); }
-
-      .point {
-        position: absolute;
-        width: 14px;
-        height: 14px;
-        border: 3px solid #fff;
-        border-radius: 999px;
-        background: var(--green);
-        box-shadow: 0 8px 18px rgba(15, 118, 110, 0.28);
-      }
-
-      .p1 { left: 3%; top: 58%; }
-      .p2 { left: 28%; top: 47%; }
-      .p3 { left: 52%; top: 62%; background: var(--amber); }
-      .p4 { left: 70%; top: 38%; background: var(--red); }
-      .p5 { left: 91%; top: 45%; }
-
-      .label {
-        position: absolute;
-        right: 24px;
-        color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      .label.ucl { top: calc(28% - 22px); color: var(--red); }
-      .label.cl { top: calc(52% - 22px); }
-      .label.lcl { top: calc(76% - 22px); color: var(--blue); }
-
-      .section {
-        padding: 18px 0 46px;
-      }
-
-      .section-header {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 18px;
-        margin-bottom: 16px;
-      }
-
-      h2 {
-        margin: 0;
-        font-size: clamp(26px, 4vw, 42px);
-        letter-spacing: -0.04em;
-      }
-
-      .section-header p {
-        max-width: 520px;
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-      }
-
-      .card,
-      .material {
-        padding: 22px;
-      }
-
-      .card h3,
-      .material h3 {
-        margin: 0 0 10px;
-        font-size: 18px;
-      }
-
-      .card p,
-      .material p {
-        margin: 0;
-        color: #475467;
-        line-height: 1.58;
-      }
-
-      .materials {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-      }
-
-      .material {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        background: var(--panel-strong);
-      }
-
-      .material span {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .footer {
-        padding: 18px 0 40px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      @media (max-width: 860px) {
-        .topbar,
-        .section-header {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-
-        .nav {
-          justify-content: flex-start;
-        }
-
-        .hero,
-        .grid,
-        .materials {
-          grid-template-columns: 1fr;
-        }
-
-        .chart-card {
-          min-height: 390px;
-        }
-      }
+      a { color: inherit; text-decoration: none; }
+      .site-header, main, footer { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+      .site-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; }
+      .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; }
+      .brand span { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; background: var(--dark); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 13px; }
+      nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+      nav a, .button { border-radius: 999px; font-size: 14px; font-weight: 800; }
+      nav a { border: 1px solid var(--line); background: rgba(255,255,255,0.7); color: var(--muted); padding: 10px 13px; }
+      .hero { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(320px,0.8fr); gap: 28px; min-height: 600px; align-items: center; padding: 56px 0 64px; }
+      .eyebrow { margin: 0 0 12px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { max-width: 820px; margin-bottom: 20px; font-size: clamp(44px, 7vw, 84px); line-height: 0.98; letter-spacing: -0.055em; }
+      h2 { max-width: 760px; margin-bottom: 0; font-size: clamp(30px,4vw,50px); line-height: 1.04; letter-spacing: -0.045em; }
+      .hero-text { max-width: 720px; color: var(--muted); font-size: 19px; line-height: 1.65; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+      .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0 18px; }
+      .button.primary { background: var(--dark); color: #fff; }
+      .button.secondary { border: 1px solid var(--line); background: #fff; }
+      .panel { border: 1px solid rgba(217,224,236,0.9); border-radius: 22px; background: rgba(255,255,255,0.8); box-shadow: var(--shadow); padding: 18px; }
+      .metric { border-radius: 16px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 28px; }
+      .metric span { display: block; font-family: "IBM Plex Mono", monospace; font-size: 54px; font-weight: 600; line-height: 1; }
+      .metric small { color: rgba(255,255,255,0.76); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+      .panel-grid { display: grid; gap: 10px; margin-top: 12px; }
+      .panel-grid div, .steps-grid article { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); padding: 16px; }
+      .panel-grid strong, .panel-grid span { display: block; }
+      .panel-grid span { margin-top: 4px; color: var(--muted); font-size: 14px; }
+      .section { border-top: 1px solid var(--line); padding: 58px 0; }
+      .section.dark { width: calc(100% + 48px); margin-left: -24px; border-radius: 24px; background: var(--dark); color: #fff; padding: 58px 24px; }
+      .section.dark .eyebrow { color: #ffd68a; }
+      .section-heading { display: grid; gap: 8px; margin-bottom: 24px; }
+      .steps-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; }
+      .steps-grid span { display: inline-flex; margin-bottom: 22px; border-radius: 999px; background: #fff2d8; color: var(--accent); font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 800; padding: 7px 9px; }
+      .steps-grid h3 { margin-bottom: 10px; font-size: 19px; letter-spacing: -0.03em; }
+      .steps-grid p { color: var(--muted); line-height: 1.58; }
+      .section.dark .steps-grid article { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.08); }
+      .section.dark .steps-grid p { color: rgba(255,255,255,0.72); }
+      footer { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; padding: 28px 0 40px; }
+      footer a { color: var(--dark); font-weight: 800; }
+      @media (max-width: 920px) { .hero, .steps-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 680px) { .site-header, footer { align-items: flex-start; flex-direction: column; } nav { justify-content: flex-start; } h1 { font-size: 43px; } .button { width: 100%; } }
     </style>
   </head>
   <body>
-    <header class="shell topbar">
-      <a class="brand" href="https://fbaakyildiz.github.io/">
-        <span class="mark">SP</span>
-        <span>Possession Signal SPC</span>
-      </a>
-      <nav class="nav" aria-label="Project navigation">
+    <header class="site-header">
+      <a class="brand" href="https://fbaakyildiz.github.io/"><span>SP</span><strong>Possession Signal SPC</strong></a>
+      <nav aria-label="Project navigation">
         <a href="https://fbaakyildiz.github.io/">Portfolio</a>
-        <a href="reports/final-report.md">Report</a>
-        <a href="docs/DESIGN.md">Design</a>
-        <a href="https://github.com/fbaakyildiz/IE423-Possession-Signal-SPC">GitHub</a>
+        <a href="#method">Method</a>
+        <a href="#materials">Materials</a>
+        <a href="https://github.com/fbaakyildiz/IE423-Possession-Signal-SPC" target="_blank" rel="noreferrer">GitHub</a>
       </nav>
     </header>
-
-    <main class="shell">
+    <main>
       <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Quality Engineering · Statistical Process Control</p>
-          <h1>Control-chart analysis for football possession dynamics.</h1>
-          <p class="lead">
-            Possession Signal SPC applies process-control thinking to minute-level football data,
-            detecting unusual possession behavior and interpreting shifts around goals, cards, and penalties.
+        <div>
+          <p class="eyebrow">Quality engineering analysis</p>
+          <h1>Control-chart thinking for football possession dynamics.</h1>
+          <p class="hero-text">
+            Possession Signal SPC treats minute-level football possession as a process signal, then
+            studies whether goals, cards, and penalties are followed by meaningful shifts in match control.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="reports/final-report.md">Open report</a>
-            <a class="button" href="reports/control-charts-analysis.html">Control charts</a>
-            <a class="button" href="reports/event-shift-analysis.html">Event shifts</a>
+            <a class="button secondary" href="reports/control-charts-analysis.html">Control charts</a>
           </div>
         </div>
-
-        <aside class="chart-card" aria-label="Control chart visualization">
-          <div class="chart">
-            <span class="limit ucl"></span>
-            <span class="limit cl"></span>
-            <span class="limit lcl"></span>
-            <span class="label ucl">UCL</span>
-            <span class="label cl">CL</span>
-            <span class="label lcl">LCL</span>
-            <div class="line">
-              <span class="segment s1"></span>
-              <span class="segment s2"></span>
-              <span class="segment s3"></span>
-              <span class="segment s4"></span>
-              <span class="point p1"></span>
-              <span class="point p2"></span>
-              <span class="point p3"></span>
-              <span class="point p4"></span>
-              <span class="point p5"></span>
-            </div>
+        <aside class="panel" aria-label="Project summary">
+          <div class="metric"><span>SPC</span><small>process monitoring</small></div>
+          <div class="panel-grid">
+            <div><strong>Method</strong><span>Shewhart-style control limits, fixture scoring, event-shift review</span></div>
+            <div><strong>Domain</strong><span>Football possession, match events, in-game momentum patterns</span></div>
+            <div><strong>Output</strong><span>Control charts, selected fixture analysis, event interpretation</span></div>
+            <div><strong>Data</strong><span>Minute-level match observations and saved chart artifacts</span></div>
           </div>
         </aside>
       </section>
 
-      <section class="section">
-        <div class="section-header">
-          <h2>What the analysis covers</h2>
-          <p>
-            The project turns live match observations into interpretable control-chart signals, then
-            connects those signals back to match events and outcomes.
-          </p>
+      <section class="section" id="method">
+        <div class="section-heading">
+          <p class="eyebrow">Method</p>
+          <h2>The analysis turns noisy possession observations into interpretable process signals.</h2>
         </div>
-        <div class="grid">
-          <article class="card">
-            <h3>Fixture scoring</h3>
-            <p>Matches are ranked by events and out-of-control behavior to select high-signal fixtures.</p>
-          </article>
-          <article class="card">
-            <h3>Control limits</h3>
-            <p>Home and away possession rates are compared against center lines and control bounds.</p>
-          </article>
-          <article class="card">
-            <h3>Event interpretation</h3>
-            <p>Goals, cards, and penalties are reviewed as possible causes of delayed possession shifts.</p>
-          </article>
+        <div class="steps-grid">
+          <article><span>01</span><h3>Group fixtures</h3><p>Load match observations and organize possession metrics by fixture and minute.</p></article>
+          <article><span>02</span><h3>Score interest</h3><p>Rank fixtures using events and out-of-control possession behavior.</p></article>
+          <article><span>03</span><h3>Build charts</h3><p>Compute center lines and control limits for home and away possession series.</p></article>
+          <article><span>04</span><h3>Interpret shifts</h3><p>Compare signal changes with goals, cards, penalties, and final match outcomes.</p></article>
         </div>
       </section>
 
-      <section class="section">
-        <div class="section-header">
-          <h2>Project materials</h2>
-          <p>Open the report, rendered analyses, notebooks, or repository source.</p>
+      <section class="section dark" id="materials">
+        <div class="section-heading">
+          <p class="eyebrow">Materials</p>
+          <h2>Reports, notebooks, and chart artifacts are linked from one page.</h2>
         </div>
-        <div class="materials">
-          <a class="material" href="reports/final-report.md">
-            <div><h3>Final report</h3><span>Written project report</span></div>
-            <strong>Open</strong>
-          </a>
-          <a class="material" href="reports/control-charts-analysis.html">
-            <div><h3>Control charts</h3><span>Rendered chart analysis</span></div>
-            <strong>Open</strong>
-          </a>
-          <a class="material" href="reports/event-shift-analysis.html">
-            <div><h3>Event shifts</h3><span>Rendered event analysis</span></div>
-            <strong>Open</strong>
-          </a>
-          <a class="material" href="docs/DESIGN.md">
-            <div><h3>Design document</h3><span>Pipeline, data model, and limitations</span></div>
-            <strong>Read</strong>
-          </a>
-          <a class="material" href="notebooks/control_charts.ipynb">
-            <div><h3>Control notebook</h3><span>Source notebook</span></div>
-            <strong>View</strong>
-          </a>
-          <a class="material" href="https://github.com/fbaakyildiz/IE423-Possession-Signal-SPC">
-            <div><h3>Repository</h3><span>Source files and documentation</span></div>
-            <strong>GitHub</strong>
-          </a>
+        <div class="steps-grid">
+          <article><span>R</span><h3><a href="reports/final-report.md">Final report</a></h3><p>Written explanation of fixture selection, charts, and findings.</p></article>
+          <article><span>C</span><h3><a href="reports/control-charts-analysis.html">Control charts</a></h3><p>Rendered notebook output for possession chart analysis.</p></article>
+          <article><span>E</span><h3><a href="reports/event-shift-analysis.html">Event shifts</a></h3><p>Rendered analysis of event timing and possession changes.</p></article>
+          <article><span>D</span><h3><a href="docs/DESIGN.md">Design document</a></h3><p>Data model, pipeline, assumptions, limitations, and next steps.</p></article>
         </div>
       </section>
     </main>
-
-    <footer class="shell footer">
-      Academic analysis only. This project is not betting advice or a production sports analytics system.
-    </footer>
+    <footer><span>Possession Signal SPC</span><span><a href="https://fbaakyildiz.github.io/">Portfolio</a></span></footer>
   </body>
 </html>
